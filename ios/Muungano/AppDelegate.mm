@@ -1,6 +1,7 @@
 #import "AppDelegate.h"
 #import "RCTAppleHealthKit.h"
 #import <React/RCTBundleURLProvider.h>
+#import <React/RCTRootView.h>
 
 @implementation AppDelegate
 
@@ -14,7 +15,7 @@
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   [[RCTAppleHealthKit new] initializeBackgroundObservers:bridge];
 
-  RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge moduleName:@"Muungano" initialProperties:props];
+  RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge moduleName:self.moduleName initialProperties:self.initialProps];
   rootView.backgroundColor = [UIColor blackColor];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];

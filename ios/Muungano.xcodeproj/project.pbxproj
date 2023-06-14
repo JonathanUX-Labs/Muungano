@@ -14,6 +14,9 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-Muungano-MuunganoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Muungano-MuunganoTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		FAB66DAE2A3A77FC008391A7 /* HighSpeed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAB66DAB2A3A77FC008391A7 /* HighSpeed.ttf */; };
+		FAB66DAF2A3A77FC008391A7 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAB66DAC2A3A77FC008391A7 /* Montserrat-Bold.ttf */; };
+		FAB66DB02A3A77FC008391A7 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAB66DAD2A3A77FC008391A7 /* Montserrat-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +48,9 @@
 		89C6BE57DB24E9ADA2F236DE /* Pods-Muungano-MuunganoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Muungano-MuunganoTests.release.xcconfig"; path = "Target Support Files/Pods-Muungano-MuunganoTests/Pods-Muungano-MuunganoTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FA0A20132A3929BE00B06AC4 /* Muungano.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Muungano.entitlements; path = Muungano/Muungano.entitlements; sourceTree = "<group>"; };
+		FAB66DAB2A3A77FC008391A7 /* HighSpeed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = HighSpeed.ttf; path = assets/fonts/HighSpeed.ttf; sourceTree = "<group>"; };
+		FAB66DAC2A3A77FC008391A7 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Bold.ttf"; path = "assets/fonts/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		FAB66DAD2A3A77FC008391A7 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Regular.ttf"; path = "assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +100,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				FAC3E4892A3A49B100AFDF05 /* Fonts */,
 			);
 			name = Muungano;
 			sourceTree = "<group>";
@@ -148,6 +155,16 @@
 				89C6BE57DB24E9ADA2F236DE /* Pods-Muungano-MuunganoTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		FAC3E4892A3A49B100AFDF05 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				FAB66DAB2A3A77FC008391A7 /* HighSpeed.ttf */,
+				FAB66DAC2A3A77FC008391A7 /* Montserrat-Bold.ttf */,
+				FAB66DAD2A3A77FC008391A7 /* Montserrat-Regular.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,7 +261,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAB66DAF2A3A77FC008391A7 /* Montserrat-Bold.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				FAB66DAE2A3A77FC008391A7 /* HighSpeed.ttf in Resources */,
+				FAB66DB02A3A77FC008391A7 /* Montserrat-Regular.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
