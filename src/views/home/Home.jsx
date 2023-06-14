@@ -6,15 +6,15 @@ import CheckSvg from '../../../assets/check.svg'
 import XmarkSvg from '../../../assets/xmark.svg'
 import ChvronLeftSvg from '../../../assets/chevron-left.svg'
 import ChvronRightSvg from '../../../assets/chevron-right.svg'
-import { useDeauthenticateMutation } from '../../features/reducers/session'
 import { CommonActions, useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
 
 function HomeScreen(){
     const navigation = useNavigation()
     const { user } = useSelector((state) => state.session)
-    const [deauthenticate] = useDeauthenticateMutation()
-    
+    console.log(user.nombre)
+
+
     const data = ['5 abril 2023', '2 abril 2023', '1 abril 2023']
 
     return (
@@ -26,23 +26,7 @@ function HomeScreen(){
 
 
                         <View style={styles.form}>
-                            <TouchableOpacity onPress={() => {
-                                deauthenticate({ user_id: user.id })
-                                    .then((response) => {
-                                        console.log('response', response)
-                                        if (response.data.success === true) {
-                                            navigation.dispatch(
-                                                CommonActions.reset({
-                                                    index: 0,
-                                                    routes: [{ name: "LoginScreen" }],
-                                                })
-                                            )
-                                        }
-                                    })
-                            }}>
-                                <Text style={{ color: 'red' }}>Cerrar sesión</Text>
-                            </TouchableOpacity>
-                            <Text style={{color: '#E08631'}}>Hola, Sergio</Text>
+                            <Text style={{color: '#E08631'}}>Hola, {user.nombre}</Text>
                             <Text style={styles.titles}>Esta semana</Text>
                             {/* <SvgXml width={20} height={20} xml={ require('../../../assets/circle.svg')} fill='#ff0000'
                             onError={(e) => { console.log('onError', e) }}

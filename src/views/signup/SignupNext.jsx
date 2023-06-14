@@ -29,6 +29,40 @@ function SignupNextScreen() {
                             style={{ width: 180, height: 200, alignSelf: 'flex-end', flex: 1, position: 'absolute'  }} />
 
                             <View style={styles.form}>
+                            <Text style={styles.titles}>Sobre ti</Text>
+                                <View style={{marginTop: 5}}>
+                                    <Text style={styles.labels}>Fecha de nacimiento</Text> 
+                                    <TextInput style={styles.formSignupInputs} />
+                                </View>
+                                <View style={{marginTop: 5}}>
+                                    <Text style={styles.labels}>En que país vives?</Text> 
+                                    <RadioButton.Group  value={checked} onValueChange={handleChecked}>
+                                        <RadioButton.Item color='#E08631' 
+                                            value="mexico" label="México" labelStyle={{ color: '#fff' }} />
+                                        <RadioButton.Item color='#E08631' label="Estados Unidos" 
+                                            value="estados_unidos" labelStyle={{ color: '#fff' }} />
+                                        <RadioButton.Item color='#E08631' label="Otro" 
+                                            value="otro" labelStyle={{ color: '#fff' }} />
+                                        <TextInput placeholderTextColor={'#8D8D8D'} style={styles.formSignupInputs} placeholder='Otro' />
+                                    </RadioButton.Group>
+                                </View>
+                                <View style={{marginTop: 5, marginBottom: 40}}>
+                                    <Text style={styles.labels}>Selecciona estado</Text> 
+                                </View>
+
+                                <Text style={styles.titles}>Contacto de Emergencia</Text>
+                                <View style={{marginTop: 5}}>
+                                    <Text style={styles.labels}>Nombre</Text> 
+                                    <TextInput style={styles.formSignupInputs} />
+                                </View>
+                                <View style={{marginTop: 5}}>
+                                    <Text style={styles.labels}>Parentesco</Text> 
+                                    <TextInput style={styles.formSignupInputs} />
+                                </View>
+                                <View style={{marginTop: 5}}>
+                                    <Text style={styles.labels}>Teléfono</Text> 
+                                    <TextInput style={styles.formSignupInputs} />
+                                </View>
                                 <Text style={styles.titles}>Historial</Text>
                                 <View style={{marginTop: 20}}>
                                     <Text style={styles.labels}>¿Cuantos kms corriste en tus ultimos 2 meses?</Text> 
