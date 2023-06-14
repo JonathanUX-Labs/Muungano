@@ -1,5 +1,5 @@
 #import "AppDelegate.h"
-
+#import "RCTAppleHealthKit.h"
 #import <React/RCTBundleURLProvider.h>
 
 @implementation AppDelegate
@@ -11,7 +11,19 @@
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
-  return [super application:application didFinishLaunchingWithOptions:launchOptions];
+  RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
+  [[RCTAppleHealthKit new] initializeBackgroundObservers:bridge];
+
+  RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge moduleName:@"Muungano" initialProperties:props];
+  rootView.backgroundColor = [UIColor blackColor];
+
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  UIViewController *rootViewController = [UIViewController new];
+  rootViewController.view = rootView;
+  self.window.rootViewController = rootViewController;
+  [self.window makeKeyAndVisible];
+  
+  return YES;
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
