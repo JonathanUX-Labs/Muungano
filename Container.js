@@ -1,4 +1,4 @@
-import { NavigationContainer, useNavigation } from '@react-navigation/native'
+import { NavigationContainer, useNavigation, CommonActions, useNavigationContainerRef } from '@react-navigation/native'
 import WelcomeScreen from './src/views/welcome/Welcome'
 import LoginScreen from './src/views/login/Login'
 import SignupScreen from './src/views/signup/Signup'
@@ -9,18 +9,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setOnboardingStatus, useDeauthenticateMutation } from './src/features/reducers/session';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //import { Image } from 'react-native-svg';
-import { useEffect } from 'react';
-import { Image } from 'react-native'
+import { useEffect, useRef } from 'react';
+import { Image, TouchableOpacity, View, Text } from 'react-native'
+import Out from './assets/out.svg'
+
 const Stack = createNativeStackNavigator();
 export default function () {
+
+  const navigation = useNavigationContainerRef()
+
   const dispatch = useDispatch()
   const { user_token } = useSelector((state) => state.main)
   const { onboardingStatus } = useSelector((state) => state.session)
+
+  
+  const { user } = useSelector((state) => state.session)
+  const [deauthenticate] = useDeauthenticateMutation()
   console.log('onboardingStatus', onboardingStatus)
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator
+    <NavigationContainer ref={navigation}>
+      <Stack.Navigator 
         initialRouteName={
           user_token
           ? 'HomeScreen'
@@ -41,7 +50,22 @@ export default function () {
         <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerTransparent: false, headerStyle: { backgroundColor: '#000' }, statusBarColor: '#000' }} />
         <Stack.Screen name="SignupScreen" component={SignupScreen} options={{ headerTransparent: false, headerStyle: { backgroundColor: '#000' }, statusBarColor: '#000' }} />
         <Stack.Screen name="SignupNextScreen" component={SignupNextScreen} options={{ headerTransparent: false, headerStyle: { backgroundColor: '#000' }, statusBarColor: '#000' }} />
-        <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerTransparent: false, headerStyle: { backgroundColor: '#000' }, statusBarColor: '#000' }} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerRight: ()=>(<TouchableOpacity style={{position: 'absolute', top: -10, right: 10}} onPress={() => {
+                                deauthenticate({ user_id: user.id })
+                                    .then((response) => {
+                                       console.log('response', response)
+                                         if (response.data.success === true) {
+                                            navigation.dispatch(
+                                                CommonActions.reset({
+                                                    index: 0,
+                                                    routes: [{ name: "LoginScreen" }],
+                                                })
+                                            )
+                                        }
+                                   })
+                            }}>
+                                <Out width={22} height={22} fill={'#FFF'} />
+                            </TouchableOpacity>), headerTransparent: false, headerStyle: { backgroundColor: '#000' }, statusBarColor: '#000' }} />
         <Stack.Screen name="ConectionScreen" component={ConectionScreen} options={{ headerTransparent: false, headerStyle: { backgroundColor: '#000' }, statusBarColor: '#000' }} />
       </Stack.Navigator>
     </NavigationContainer>

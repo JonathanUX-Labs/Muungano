@@ -1,10 +1,12 @@
 import { KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ScrollView, ImageBackground, Text, View 
-    ,StyleSheet, TextInput, TouchableOpacity} from 'react-native'
+    ,StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { RadioButton } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
 import { useCreateUserMutation } from '../../features/reducers/signup'
+import Eye from '../../../assets/eye.svg'
+import EyeSlash from '../../../assets/eye-slash.svg'
 
 function SignupScreen() {
 
@@ -34,6 +36,23 @@ function SignupScreen() {
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
 
+    const [showPassword, setShowPassword] = useState(false)
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const showAlert = () => {
+        console.log('Mosrando')
+        Alert.alert(
+            'Titulo',
+            'Cuenta creada correctamente',
+            [
+                { text: 'Cancelar', onPress: () => console.log('Cancelar') },
+                { text: 'Aceptar', onPress: () => console.log('Aceptar') }
+            ]
+        );
+    };
+
     const [ createUser, { isLoading: creatingUserLoading } ] = useCreateUserMutation();
 
     return (
@@ -45,7 +64,7 @@ function SignupScreen() {
 
                             <View style={styles.form}>
                                 <Text style={styles.titles}>Datos generales</Text>
-                                <View style={{marginTop: 20}}>
+                                <View>
                                     <Text style={styles.labels}>Nombre</Text> 
                                     <TextInput onChangeText={setFirst_name} value={first_name} style={styles.formSignupInputs} />
                                 </View>
@@ -63,54 +82,32 @@ function SignupScreen() {
                                 </View>
                                 <View style={{marginTop: 5}}>
                                     <Text style={styles.labels}>Contraseña</Text> 
-                                    <TextInput onChangeText={setPassword} value={password} style={styles.formSignupInputs} />
+                                    <TextInput secureTextEntry={!showPassword} onChangeText={setPassword} value={password} style={styles.formSignupInputs} />
+                                    <TouchableOpacity onPress={toggleShowPassword} style={{position: 'absolute', right: 25, top: '47%'}}>
+                                    {
+                                        showPassword
+                                        ? <EyeSlash width={22} height={22} fill={'#7F8C8D'} />
+                                        : <Eye width={22} height={22} fill={'#fff'} />
+                                        }
+                                    </TouchableOpacity>
                                 </View>
-                                <View style={{marginTop: 5}}>
-                                    <Text style={styles.labels}>Fecha de nacimiento</Text> 
-                                    <TextInput style={styles.formSignupInputs} />
-                                </View>
-                                <View style={{marginTop: 5}}>
-                                    <Text style={styles.labels}>En que país vives?</Text> 
-                                    <RadioButton.Group  value={checked} onValueChange={handleChecked}>
-                                        <RadioButton.Item color='#E08631' 
-                                            value="mexico" label="México" labelStyle={{ color: '#fff' }} />
-                                        <RadioButton.Item color='#E08631' label="Estados Unidos" 
-                                            value="estados_unidos" labelStyle={{ color: '#fff' }} />
-                                        <RadioButton.Item color='#E08631' label="Otro" 
-                                            value="otro" labelStyle={{ color: '#fff' }} />
-                                        <TextInput placeholderTextColor={'#8D8D8D'} style={styles.formSignupInputs} placeholder='Otro' />
-                                    </RadioButton.Group>
-                                </View>
-                                <View style={{marginTop: 5, marginBottom: 40}}>
-                                    <Text style={styles.labels}>Selecciona estado</Text> 
-                                </View>
-
-                                <Text style={styles.titles}>Contacto de Emergencia</Text>
-                                <View style={{marginTop: 5}}>
-                                    <Text style={styles.labels}>Nombre</Text> 
-                                    <TextInput style={styles.formSignupInputs} />
-                                </View>
-                                <View style={{marginTop: 5}}>
-                                    <Text style={styles.labels}>Parentesco</Text> 
-                                    <TextInput style={styles.formSignupInputs} />
-                                </View>
-                                <View style={{marginTop: 5}}>
-                                    <Text style={styles.labels}>Teléfono</Text> 
-                                    <TextInput style={styles.formSignupInputs} />
-                                </View>
+                                
                                 <TouchableOpacity style={styles.nextButton} onPress={() => {
-                if (email.length > 0 && password.length > 0) {
-                    createUser({ first_name, last_name, email, phone, password })
-                    .then(response => {
-                      console.log('response', response)
-                    })
-                    .catch((error) => {
-                      console.log('error', error)
-                    })
-                } else {
-                  console.log('Por favor llena los campos correctamente')
-                }
-              }}>
+                                        if (email.length > 0 && password.length > 0 && first_name.length > 0
+                                            && last_name.length > 0 && phone.length > 0) {
+                                            createUser({ first_name, last_name, email, phone, password })
+                                            .then(response => {
+                                                console.log('response', response)
+                                                showAlert
+                                                //navigation.navigate('LoginScreen')
+                                            })
+                                            .catch((error) => {
+                                                console.log('error', error)
+                                            })
+                                        } else {
+                                        console.log('Por favor llena los campos correctamente')
+                                        }
+                                    }}>
                                     <Text style={styles.textButton}>{ 
                                     !creatingUserLoading
                                     ? 'Crear cuenta'
@@ -135,7 +132,7 @@ const styles = StyleSheet.create({
       paddingLeft: 10,
       paddingRight: 10,
       flex: 1,
-      paddingTop: '25%'
+      paddingTop: '20%'
     },
 
     titles: {
@@ -167,7 +164,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignSelf: 'center',
         marginTop: 40,
-        marginBottom: 20
+        marginBottom: 80
     },
 
     textButton: {
