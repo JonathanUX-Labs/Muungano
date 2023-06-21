@@ -13,6 +13,7 @@ function LoginScreen() {
   const navigation = useNavigation()
   const { user_token } = useSelector(store => store.main)
 
+  console.log('user_token', user_token)
   useEffect(() => {
     if (user_token != null) {
       navigation.dispatch(
@@ -31,6 +32,7 @@ function LoginScreen() {
   const [authenticate, { isLoading: loadingAuthentication }] = useAuthenticateMutation()
 
   const toggleShowPassword = () => {
+    console.log('toggleShowPassword', toggleShowPassword)
     setShowPassword(!showPassword);
   };
 
@@ -38,12 +40,9 @@ function LoginScreen() {
     <KeyboardAvoidingView style={{ flex: 1, backgroundColor: '#000' }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-
           <ImageBackground source={require('../../../assets/manchasTop.png')}
             style={{ width: 180, height: 200, alignSelf: 'flex-end', flex: 1, position: 'absolute' }} />
-
           <View style={styles.formLogin}>
-
             <View style={{ paddingLeft: 10 }}>
               <Text style={styles.textWelcomeR}>Welcome{'\n'}
                 Runner</Text>
@@ -51,18 +50,19 @@ function LoginScreen() {
             <TextInput onChangeText={setEmail} value={email} style={styles.formLoginInputs} placeholder='Correo electrónico' />
             <View>
               <TextInput onChangeText={setPassword} secureTextEntry={!showPassword} value={password} style={styles.formLoginInputs} placeholder='Contraseña' />
-              <TouchableOpacity onPress={toggleShowPassword} style={{position: 'absolute', right: 25, top: '33%'}}>
+              <TouchableOpacity onPress={toggleShowPassword} style={{ position: 'absolute', right: 25, top: '33%' }}>
                 {
                   showPassword
                   ? <EyeSlash width={22} height={22} fill={'#7F8C8D'} />
                   : <Eye width={22} height={22} fill={'#000'} />
-                }</TouchableOpacity>
+                }
+              </TouchableOpacity>
             </View>
-
             <TouchableOpacity
               style={styles.loginButton}
               onPress={() => {
                 if (email.length > 0 && password.length > 0) {
+                  console.log('authenticate')
                   authenticate({ email, password })
                     .then(response => {
                       console.log('response', response)
@@ -77,7 +77,8 @@ function LoginScreen() {
             >
               {/* <TouchableOpacity style={styles.loginButton} onPress={this.printData }> */}
               <Text style={styles.textButton}>
-                { !loadingAuthentication
+                {
+                  !loadingAuthentication
                   ? 'Iniciar sesión'
                   : 'Cargando...'
                 }
