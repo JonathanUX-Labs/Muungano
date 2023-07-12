@@ -6,31 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { setOnboardingStatus } from '../../features/reducers/session';
 
-
 const WelcomeScreen = () => {
-  // fetch('https://muungano.mx/v1/places')
-  //   .then(response => response.text())
-  //   .then(data => {
-  //     // Manejar la respuesta exitosa
-  //     console.log(data);
-  //   })
-  //   .catch(error => {
-  //     // Manejar el error
-  //     console.error(error);
-  // });
-
   const navigation = useNavigation()
-  // eslint-disable-next-line no-unused-vars
-  // const handleGetStarted = async () => {
-  //   try {
-  //     await AsyncStorage.setItem('onboardingStatus', 'viewed');
-  //     navigation.navigate('HomeScreen');
-  //   } catch (error) {
-  //     console.log('Error al almacenar el estado del Onboarding:', error);
-  //     return false
-  //   }
-  // };
-
 
   return (
     <KeyboardAvoidingView style={{ flex: 1, backgroundColor: '#000', alignItems: 'center' }}>
@@ -39,7 +16,7 @@ const WelcomeScreen = () => {
       <Text style={stylesWelcome.welcomeText1}>Run together</Text>
       <Text style={stylesWelcome.welcomeText2}>Race Yourself</Text>
       <View style={stylesWelcome.containButton}> 
-        <TouchableOpacity style={stylesWelcome.welcomeButton} onPress={()=> navigation.navigate('LoginScreen')}>
+        <TouchableOpacity style={stylesWelcome.welcomeButton} onPress={() => navigation.navigate('LoginScreen')}>
           <Text style={stylesWelcome.textButton}>Entrar</Text>
         </TouchableOpacity>
       </View>

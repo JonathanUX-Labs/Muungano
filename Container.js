@@ -15,27 +15,23 @@ import Out from './assets/out.svg'
 
 const Stack = createNativeStackNavigator();
 export default function () {
-
   const navigation = useNavigationContainerRef()
-
   const dispatch = useDispatch()
   const { user_token } = useSelector((state) => state.main)
-  const { onboardingStatus } = useSelector((state) => state.session)
+  const { user, onboardingStatus } = useSelector((state) => state.session)
 
-  
-  const { user } = useSelector((state) => state.session)
   const [deauthenticate] = useDeauthenticateMutation()
   console.log('onboardingStatus', onboardingStatus)
 
   return (
     <NavigationContainer ref={navigation}>
-      <Stack.Navigator 
+      <Stack.Navigator
         initialRouteName={
           user_token
-          ? 'HomeScreen'
-          : onboardingStatus
-            ? 'LoginScreen'
-            : 'WelcomeScreen'
+            ? 'HomeScreen'
+            : onboardingStatus
+              ? 'LoginScreen'
+              : 'WelcomeScreen'
         }
         headerMode="none"
         screenOptions={{
@@ -50,22 +46,37 @@ export default function () {
         <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerTransparent: false, headerStyle: { backgroundColor: '#000' }, statusBarColor: '#000' }} />
         <Stack.Screen name="SignupScreen" component={SignupScreen} options={{ headerTransparent: false, headerStyle: { backgroundColor: '#000' }, statusBarColor: '#000' }} />
         <Stack.Screen name="SignupNextScreen" component={SignupNextScreen} options={{ headerTransparent: false, headerStyle: { backgroundColor: '#000' }, statusBarColor: '#000' }} />
-        <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerRight: ()=>(<TouchableOpacity style={{position: 'absolute', top: -10, right: 10}} onPress={() => {
-                                deauthenticate({ user_id: user.id })
-                                    .then((response) => {
-                                       console.log('response', response)
-                                         if (response.data.success === true) {
-                                            navigation.dispatch(
-                                                CommonActions.reset({
-                                                    index: 0,
-                                                    routes: [{ name: "LoginScreen" }],
-                                                })
-                                            )
-                                        }
-                                   })
-                            }}>
-                                <Out width={22} height={22} fill={'#FFF'} />
-                            </TouchableOpacity>), headerTransparent: false, headerStyle: { backgroundColor: '#000' }, statusBarColor: '#000' }} />
+        <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{
+            headerRight: () => (
+              <TouchableOpacity
+                style={{ position: 'absolute', top: -10, right: 10 }}
+                onPress={() => {
+                  deauthenticate({ user_id: user.id })
+                    .then((response) => {
+                      console.log('response', response)
+                      if (response.data.success === true) {
+                        navigation.dispatch(
+                          CommonActions.reset({
+                            index: 0,
+                            routes: [{ name: "LoginScreen" }],
+                          })
+                        )
+                      }
+                    })
+                }}>
+                <Out width={22} height={22} fill={'#FFF'} />
+              </TouchableOpacity>
+            ),
+            headerTransparent: false,
+            headerStyle: {
+              backgroundColor: '#000'
+            },
+            statusBarColor: '#000'
+          }}
+        />
         <Stack.Screen name="ConectionScreen" component={ConectionScreen} options={{ headerTransparent: false, headerStyle: { backgroundColor: '#000' }, statusBarColor: '#000' }} />
       </Stack.Navigator>
     </NavigationContainer>

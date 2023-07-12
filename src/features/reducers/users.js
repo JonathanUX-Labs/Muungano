@@ -112,22 +112,49 @@ export const api = createApi({
       async onCacheEntryAdded() {
         console.log("onCacheEntryAdded users");
       },
+    }),
+    fetchRunners: build.mutation({
+      query: () => ({
+        url: `/test2`,
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        console.log("onQueryStarted runners");
+        try {
+          const { data } = await queryFulfilled
+          //console.log('runners', data);
+          if (verifyResponse(data, dispatch)) {
+            if (data.data) dispatch(setRunners(data.data));
+            dispatch(setLastUpdated(moment().unix()));
+          }
+        } catch (err) {
+          console.log("users error: ", err);
+          alert("Error al cargar los corredores");
+        }
+      },
+      async onCacheEntryAdded() {
+        console.log("onCacheEntryAdded runners");
+      },
     })
   })
 })
 
-export const { useFetchUserByIdMutation, useCreateUserMutation, useEditUserMutation, useFetchUsersMutation } = api
+export const { useFetchUserByIdMutation, useCreateUserMutation, useEditUserMutation, useFetchUsersMutation, useFetchRunnersMutation } = api
 
 export const s = createSlice({
   name: 'users',
   initialState: {
     users: [],
+    runners: [],
     last_updated: null
   },
   reducers: {
     setUsers: (state, action) => {
       console.log("setUsers: ", action.payload);
       state.users = action.payload
+    },
+    setRunners: (state, action) => {
+      console.log("setRunner: ", action.payload);
+      state.runners = action.payload
     },
     setLastUpdated: (state, action) => {
       console.log("setLastUpdated: ", action.payload);
@@ -136,6 +163,6 @@ export const s = createSlice({
   },
 })
 
-export const { setUsers, setLastUpdated } = s.actions
+export const { setUsers, setRunners, setLastUpdated } = s.actions
 
 export default s.reducer

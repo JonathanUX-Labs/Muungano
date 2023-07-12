@@ -10,11 +10,14 @@
     "test": "jest"
   },
   "dependencies": {
+    "@garmin-fit/sdk": "^21.115.0",
     "@react-native-async-storage/async-storage": "^1.18.2",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
     "@reduxjs/toolkit": "^1.9.5",
+    "crypto-js": "^4.1.1",
     "moment": "^2.29.4",
+    "oauth-1.0a": "^2.2.6",
     "react": "18.2.0",
     "react-native": "0.71.8",
     "react-native-health": "^1.14.0",
@@ -23,6 +26,7 @@
     "react-native-screens": "^3.20.0",
     "react-native-slider": "^0.11.0",
     "react-native-svg": "^13.9.0",
+    "react-native-webview": "^13.2.2",
     "react-redux": "^8.0.7",
     "react-router-dom": "^6.12.1",
     "redux": "^4.2.1",

@@ -6,6 +6,7 @@ import main from './reducers/main'
 import devices, { api as devices_api } from './reducers/devices'
 import signup, { api as signup_api } from "./reducers/signup"
 import users, { api as users_api } from "./reducers/users"
+import workouts, { api as workouts_api } from "./reducers/workouts"
 
 const persistConfig = {
   storage: AsyncStorage,
@@ -22,6 +23,8 @@ let mainReducer = combineReducers({
   [signup_api.reducerPath]: signup_api.reducer,
   users: persistReducer({ ...persistConfig, key: 'users' }, users),
   [users_api.reducerPath]: users_api.reducer,
+  workouts: persistReducer({ ...persistConfig, key: 'workouts'}, workouts),
+  [workouts_api.reducerPath]: workouts_api.reducer
 })
 
 const rootReducer = (state, action) => {

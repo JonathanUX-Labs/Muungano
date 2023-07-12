@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { clearUserData, verifyResponse } from '../../Utils'
 import moment from 'moment';
 import { setUserToken } from './main'
+import { setRunners } from './users'
 
 export const api = createApi({
   reducerPath: 'session_api',
@@ -40,6 +41,7 @@ export const api = createApi({
             if (data.token && data.user) {
               await dispatch(setUserToken(data.token))
               await dispatch(setUser(data.user))
+              // await dispatch(setRunners(data.runners))
               await dispatch(setOnboardingStatus(true))
             } else alert("Error tratando de iniciar sesión")
             dispatch(setLastUpdated(moment().unix()))
@@ -124,6 +126,7 @@ export const api = createApi({
             if (data.token && data.user) {
               await dispatch(setUserToken(data.token));
               await dispatch(setUser(data.user));
+              // await dispatch(setRunners(data.runners));
             } else alert("Error trying to reset password");
             dispatch(setLastUpdated(moment().unix()));
           }

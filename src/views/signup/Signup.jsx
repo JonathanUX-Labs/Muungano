@@ -99,7 +99,7 @@ function SignupScreen() {
                                             .then(response => {
                                                 console.log('response', response)
                                                 showAlert
-                                                //navigation.navigate('LoginScreen')
+                                                navigation.navigate('ConectionScreen')
                                             })
                                             .catch((error) => {
                                                 console.log('error', error)

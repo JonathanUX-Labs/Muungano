@@ -1,8 +1,41 @@
 import React from 'react'
+import OAuth from 'oauth-1.0a'
+import { enc, HmacSHA1 } from 'crypto-js';
+import { WebView } from 'react-native-webview';
+
+
 import { View, TouchableWithoutFeedback, TouchableOpacity, Text, KeyboardAvoidingView, 
     Platform, ImageBackground, StyleSheet, Keyboard, ScrollView, TextInput, Image } from 'react-native'
 
 function ConectionScreen(){
+
+    //const { oauthTokens } = useSelector((state) => state.users)
+
+    const getToken = async () => {
+        
+        const url = 'https://muungano.mx/v1/garmin_connect'
+
+        fetch(url, {
+            method: 'GET'
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.data);
+                console.log(data.data.substring(12, 48));
+                const oauth_token = data.data.substring(12, 48).toString()
+                return (
+                    <WebView
+                      source={{ uri: 'https://connect.garmin.com/oauthConfirm?oauth_token='+oauth_token+'&oauth_callback=https://ai.uxlabs.mx/api/muungano' }}
+                    />
+                );
+                //oauth_token=cd0feabf-b4e8-45ea-b76b-1da17c2f6a75&oauth_token_secret=TE5pE6gvZcQPC37Tu2ydbQqXfp1v5D9HdKx
+            })
+            .catch(error => {
+                console.log(error);
+        });
+
+    }
+
     return (
         <KeyboardAvoidingView style={{ flex: 1, backgroundColor: '#000'}} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -35,7 +68,7 @@ function ConectionScreen(){
                             <TouchableOpacity style={styles.Button} onPress={()=> navigation.navigate('ConectionScreen')}>
                                 <Text style={styles.textButton}>Conecta tu cuenta nueva de Strava</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.Button} onPress={()=> navigation.navigate('ConectionScreen')}>
+                            <TouchableOpacity style={styles.Button} onPress={ getToken }>
                                 <Text style={styles.textButton}>Conecta tu cuenta nueva de Garmin</Text>
                             </TouchableOpacity>
                         </View>    
